@@ -1,6 +1,7 @@
 import { validateHashtags, getErrorText, validateDescription } from './form-img-upload-validate.js';
 import { isEscapeKey } from './util.js';
 import { sendData } from './api.js';
+import { initDataLayerPush } from './gtm.js';
 
 const form = document.querySelector('.img-upload__form');
 const formImgUploadOverlay = form.querySelector('.img-upload__overlay');
@@ -77,6 +78,15 @@ const setUserFormSubmit = (onSuccess) => {
     }
 
     const formData = new FormData(evt.target);
+
+    const dataLayerEventName = 'photoSend';
+    const dataLayerObject = {
+      'effect': formData.get('effect'),
+      'effectLevel': formData.get('effect-level'),
+      'scale': formData.get('scale')
+    };
+    initDataLayerPush(dataLayerEventName, dataLayerObject);
+
     blockSubmitButton();
 
     try {

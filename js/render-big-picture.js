@@ -1,5 +1,6 @@
 import { isEscapeKey } from './util.js';
 import { renderFirstsComments, renderMoreComments } from './render-comments.js';
+import { initDataLayerPush } from './gtm.js';
 
 const modalBigPhoto = document.querySelector('.big-picture');
 const bigPhoto = modalBigPhoto.querySelector('.big-picture__img');
@@ -9,7 +10,12 @@ const commentsLoader = bigPictureSocial.querySelector('.comments-loader');
 const findPhotoObject = (pictureId, photoData) =>
   photoData.find((item) => item.id === parseInt(pictureId, 10));
 
-const onCommentsLoaderClick = () => renderMoreComments();
+const onCommentsLoaderClick = () => {
+  renderMoreComments();
+
+  const dataLayerEventName = 'moreCommentsClick';
+  initDataLayerPush(dataLayerEventName);
+};
 
 const openModalBigPhoto = (pictureId, photoData) => {
   modalBigPhoto.classList.remove('hidden');

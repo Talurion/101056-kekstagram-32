@@ -1,5 +1,6 @@
 import { openModalBigPhoto, closeModalBigPhoto } from './render-big-picture.js';
 import { showFilters } from './filters.js';
+import { initDataLayerPush } from './gtm.js';
 
 const RENDER_ERROR_RETRY_DELAY = 500;
 const SHOW_ERROR_TIMEOUT_DELAY = 5000;
@@ -53,6 +54,11 @@ const setThumbnailsClick = (data) => {
     if (clickedThumbnail) {
       evt.preventDefault();
       openModalBigPhoto(clickedThumbnail.dataset.pictureId, data);
+
+      const dataLayerEventName = 'photoOpen';
+      const dataLayerObject = {'photoId': clickedThumbnail.dataset.pictureId};
+      initDataLayerPush(dataLayerEventName, dataLayerObject);
+
     }
   });
 

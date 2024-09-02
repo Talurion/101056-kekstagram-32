@@ -1,5 +1,6 @@
 import { sortItemsInDescendingOrder, shuffleItems, debounce } from './util.js';
 import { renderThumbnailListWithRetry } from './render-thumbnails.js';
+import { initDataLayerPush } from './gtm.js';
 
 const RERENDER_DELAY = 500;
 const PICTURE_COUNT = 10;
@@ -32,6 +33,12 @@ const changeThumbnailList = (evt, data) => {
 const setFiltersClick = (data) => {
   const handleThumbnailChange = debounce((evt) => {
     changeThumbnailList(evt, data);
+
+    const filterId = evt.target.id;
+    const dataLayerEventName = 'filterClick';
+    const dataLayerObject = {'filter': filterId};
+    initDataLayerPush(dataLayerEventName, dataLayerObject);
+
   }, RERENDER_DELAY);
 
   imgFiltersContainer.addEventListener('click', (evt) => {
