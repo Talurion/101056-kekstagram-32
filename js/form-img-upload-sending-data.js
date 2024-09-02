@@ -79,14 +79,6 @@ const setUserFormSubmit = (onSuccess) => {
 
     const formData = new FormData(evt.target);
 
-    const dataLayerEventName = 'photoSend';
-    const dataLayerObject = {
-      'effect': formData.get('effect'),
-      'effectLevel': formData.get('effect-level'),
-      'scale': formData.get('scale')
-    };
-    initDataLayerPush(dataLayerEventName, dataLayerObject);
-
     blockSubmitButton();
 
     try {
@@ -94,6 +86,17 @@ const setUserFormSubmit = (onSuccess) => {
       isResponseError = !response.ok;
       showNotification(isResponseError);
       onSuccess(isResponseError);
+
+      if (!isResponseError) {
+        const dataLayerEventName = 'photoSend';
+        const dataLayerObject = {
+          'effect': formData.get('effect'),
+          'effectLevel': formData.get('effect-level'),
+          'scale': formData.get('scale')
+        };
+        initDataLayerPush(dataLayerEventName, dataLayerObject);
+      }
+
     } finally {
       unblockSubmitButton();
     }
