@@ -13,13 +13,19 @@ const findPhotoObject = (pictureId, photoData) =>
 const onCommentsLoaderClick = () => {
   renderMoreComments();
 
-  const dataLayerEventName = 'moreCommentsClick';
-  initDataLayerPush(dataLayerEventName);
+  const pictureId = bigPhoto.querySelector('img').dataset.pictureId;
+  const dataLayerEventName = 'bigPhotoOverlay';
+  const dataLayerObject = {
+    'userAction': 'moreCommentsClick',
+    'photoId': pictureId
+  };
+  initDataLayerPush(dataLayerEventName, dataLayerObject);
 };
 
 const openModalBigPhoto = (pictureId, photoData) => {
   modalBigPhoto.classList.remove('hidden');
   document.body.classList.add('modal-open');
+  bigPhoto.querySelector('img').dataset.pictureId = pictureId;
 
   document.addEventListener('keydown', onModalEscKeydown);
   modalBigPhoto.addEventListener('click', onModalElsewhereClick);

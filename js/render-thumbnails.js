@@ -55,8 +55,11 @@ const setThumbnailsClick = (data) => {
       evt.preventDefault();
       openModalBigPhoto(clickedThumbnail.dataset.pictureId, data);
 
-      const dataLayerEventName = 'photoOpen';
-      const dataLayerObject = {'photoId': clickedThumbnail.dataset.pictureId};
+      const dataLayerEventName = 'bigPhotoOverlay';
+      const dataLayerObject = {
+        'userAction': 'photoOpen',
+        'photoId': clickedThumbnail.dataset.pictureId
+      };
       initDataLayerPush(dataLayerEventName, dataLayerObject);
 
     }
