@@ -19,12 +19,22 @@
 
   <!-- Matomo Tag Manager -->
   <script>
-    var dataLayer = window.dataLayer = window.dataLayer || [];
-    var _mtm = window._mtm = window._mtm || [];
-    _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
     (function() {
-      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-      g.async=true; g.src='https://matomotagmanager.t2.ru/js/container_TbzRxNG1.js'; s.parentNode.insertBefore(g,s);
+      window.dataLayer = window.dataLayer || [];
+      window._mtm = window._mtm || [];
+      window._mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
+      var originalPush = window.dataLayer.push;
+
+      window.dataLayer.push = function() {
+          var args = Array.prototype.slice.call(arguments);
+          window._mtm.push.apply(window._mtm, args);
+          return originalPush.apply(window.dataLayer, args);
+      };
+
+      var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+      g.async = true;
+      g.src = 'https://matomotagmanager.t2.ru/js/container_TbzRxNG1.js';
+      s.parentNode.insertBefore(g, s);
     })();
   </script>
   <!-- End Matomo Tag Manager -->
